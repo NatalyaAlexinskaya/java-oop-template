@@ -7,6 +7,10 @@ public class SimpleSchoolBookRepository implements BookRepository<SchoolBook> {
 
     @Override
     public boolean save(SchoolBook book) {
+        if (book == null) {
+            return false;
+        }
+
         SchoolBook[] schoolBooks1 = new SchoolBook[schoolBooks.length + 1];
         schoolBooks1[schoolBooks1.length - 1] = book;
         for (int i = 0; i < schoolBooks.length; i++) {
@@ -24,9 +28,11 @@ public class SimpleSchoolBookRepository implements BookRepository<SchoolBook> {
                 count++;
             }
         }
-        if (count == 0) {
+
+        if (count == 0 || name == null) {
             return new SchoolBook[0];
         }
+
         SchoolBook[] schoolBooksName = new SchoolBook[count];
         int index = 0;
         for (int i = 0; i < schoolBooks.length; i++) {
@@ -40,6 +46,10 @@ public class SimpleSchoolBookRepository implements BookRepository<SchoolBook> {
 
     @Override
     public boolean removeByName(String name) {
+        if (name == null) {
+            return false;
+        }
+
         SchoolBook[] schoolBooks1 = new SchoolBook[0];
         int count = 0;
         if (findByName(name) != new SchoolBook[0]) {
@@ -52,14 +62,15 @@ public class SimpleSchoolBookRepository implements BookRepository<SchoolBook> {
             int index = 0;
             for (int j = 0; j < schoolBooks.length; j++) {
                 if (!(schoolBooks[j].getName().equals(name))) {
-                        schoolBooks1[index] = schoolBooks[j];
-                        index++;
+                    schoolBooks1[index] = schoolBooks[j];
+                    index++;
                 }
             }
             schoolBooks = schoolBooks1;
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
     @Override

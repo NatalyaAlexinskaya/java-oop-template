@@ -48,11 +48,10 @@ public class SimpleSchoolBookService implements BookService<SchoolBook> {
 
     @Override
     public Author findAuthorByBookName(String name) {
-        Author rezalt = null;
         SchoolBook[] books = schoolBookBookRepository.findByName(name);
         if (books != new SchoolBook[0]) {
-            rezalt = authorService.findByFullName(books[0].getAuthorName(), books[0].getAuthorLastName());
+            return authorService.findByFullName(books[0].getAuthorName(), books[0].getAuthorLastName());
         }
-        return rezalt;
+        return null;
     }
 }
